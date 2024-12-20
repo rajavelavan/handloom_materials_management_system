@@ -39,10 +39,13 @@ app.use('/verifyemail', VerifyEmailRouter);
 app.use('/order', OrderRouter);
 app.use('/forgotpassword', ForgotPasswordRouter);
 
+// This condition redering is because of the deployment of the server directory in vercel. Vercel is having a builtIn server to deploy the projects. 
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`)
-});
+if (process.env.NODE_ENV !== 'production') {
+    const PORT = process.env.PORT || 5000;         
+    app.listen(PORT, () => {
+        console.log(`Server started on port ${PORT}`)
+    });
+}
 
-module.exports = app;
+export default app;

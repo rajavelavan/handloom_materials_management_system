@@ -12,10 +12,15 @@ import VerifyEmailRouter from './routes/verifyEmail.js'
 import OrderRouter from './routes/orderRoute.js';
 import ForgotPasswordRouter from './routes/forgotPassword.js'
 
+const corsOptions = {
+    origin: process.env.FRONTEND_URL,
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE'
+};
+
 
 const app = express()
 dotenv.config();
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json())
 connect();
 

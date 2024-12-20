@@ -13,7 +13,7 @@ import OrderRouter from './routes/orderRoute.js';
 import ForgotPasswordRouter from './routes/forgotPassword.js'
 
 const corsOptions = {
-    origin: process.env.FRONTEND_URL,
+    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE'
 };
 

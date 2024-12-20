@@ -13,7 +13,7 @@ import OrderRouter from './routes/orderRoute.js';
 import ForgotPasswordRouter from './routes/forgotPassword.js'
 
 const corsOptions = {
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000',
+    origin: process.env.FRONTEND_URL || 'https://hmms-client.vercel.app',
     methods: 'GET, HEAD, PUT, PATCH, POST, DELETE'
 };
 

@@ -1,3 +1,3 @@
-const BASE_URL = process.env.BACKEND_URL || "http://localhost:5000"
+const BASE_URL = process.env.BACKEND_URL || "https://hmms-server.vercel.app"
 
 export {BASE_URL}; 

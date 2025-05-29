@@ -45,7 +45,6 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const res = await Axios.post(`${BASE_URL}/login`, user);
-      console.log(res.data);
 
       if (res.data.success === true) {
         sessionStorage.setItem("hmms_user",JSON.stringify(res.data.user));

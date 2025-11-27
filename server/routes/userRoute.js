@@ -1,7 +1,7 @@
 import express from 'express';
 import UserModel from '../assets/models/userModel.js';
 import bcryptjs from 'bcryptjs';
-import { verifyEmail } from './helper/sendMail.js';
+import { verifyEmail } from '../helper/sendMail.js';
 
 const router = express.Router();
 

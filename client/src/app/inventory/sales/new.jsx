@@ -8,10 +8,9 @@ import TextInput from '../../components/formInputs/textInput.jsx';
 import TextareaInput from '../../components/formInputs/textareaInput.jsx';
 import SelectInput from '../../components/formInputs/selectInput.jsx';
 import SubmitButton from '../../components/formInputs/submitButton.jsx';
-import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { BASE_URL } from '../../helper/config.js';
+import api from '../../helper/axiosInstance';
 
 export default function NewPurchase() {
 
@@ -28,7 +27,7 @@ export default function NewPurchase() {
     let userDetails = JSON.parse(sessionStorage.getItem("hmms_user"));
     try {
       data.createdBy = userDetails.mail_id;
-      await Axios.post(`${BASE_URL}/sales`, data);
+      await api.post(`/sales`, data);
     //   console.log(res);
       setLoading(false);
       navigate('/sales');

@@ -6,9 +6,8 @@ import { FilePenLineIcon, Trash2Icon } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import {getData} from '../../redux/features/purchaseSlice';
 import toast from 'react-hot-toast';
-import Axios from 'axios';
 import {setSelectedData} from '../../redux/features/purchaseSlice';
-import { BASE_URL } from '../../helper/config';
+import api from '../../helper/axiosInstance';
 
 export default function PurchaseOrders() {
   
@@ -25,7 +24,7 @@ export default function PurchaseOrders() {
 
   async function handleDeleteConfirmation(confirmed) {
     if (confirmed) {
-      const res = await Axios.delete(`${BASE_URL}/purchases/${itemId}`);
+      const res = await api.delete(`/purchases/${itemId}`);
       toast.success('data deleted Success.');
       console.log("Removed Data:", res.data);
     }
@@ -35,7 +34,7 @@ export default function PurchaseOrders() {
   React.useEffect(() => {
     const fetchdata = async () => {
       try {
-        const res = await Axios.get(`${BASE_URL}/purchases`);   
+        const res = await api.get(`/purchases`);   
         // console.log(res);  
         dispatch(getData(res.data));     
       } catch (error) {

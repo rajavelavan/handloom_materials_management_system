@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
     }
 
     // Find the user based on email
-    const user = await UserModel.findOne({mail_id });
+    const user = await UserModel.findOne({ mail_id }).select('+verifyOtp');
 
     // If there is no user
     if (!user) {

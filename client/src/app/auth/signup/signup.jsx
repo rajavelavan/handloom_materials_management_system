@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import Axios from 'axios';
-import { BASE_URL } from '../../helper/config';
+import api from '../../helper/axiosInstance';
 
 export default function SignupPage() {
   const navigate = useNavigate();
@@ -46,12 +45,13 @@ export default function SignupPage() {
     try {
       user.role = "customer";
       user.mail_id = user.mail_id.toLowerCase();
-      const res = await Axios.post(`${BASE_URL}/signup`, user);
+      const res = await api.post(`/signup`, user);
       console.log(res.data);
       
       if (res.data.success === true) {
         navigate('/verifyemail');
         toast.success('Please verify email, check your mail.');
+        sessionStorage.setItem("hmms_token", res.data.token);
         sessionStorage.setItem("hmms_user",JSON.stringify(res.data.user));
         sessionStorage.setItem("hmms_super_admin", res.data.user.role === "super_admin" ? true : false);
       } else {

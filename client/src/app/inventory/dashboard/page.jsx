@@ -1,9 +1,8 @@
 'use client';
-import axios from 'axios';
 import { CheckCircle2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BASE_URL } from '../../helper/config';
+import api from '../../helper/axiosInstance';
 
 export default function Dashboard() {
   const hasFetchedRef = React.useRef(false);
@@ -23,7 +22,7 @@ export default function Dashboard() {
 
   const fetchAllPurchaseData = async () => {
     try {
-      const purchase = await axios.get(`${BASE_URL}/purchases`);
+      const purchase = await api.get(`/purchases`);
       setPurchaseData(purchase.data);
       // console.log(purchase.data)
       // getSum(purchase.data, 'itemRequired');
@@ -34,7 +33,7 @@ export default function Dashboard() {
 
   const fetchAllSalesData = async () => {
     try {
-      const sales = await axios.get(`${BASE_URL}/sales`);
+      const sales = await api.get(`/sales`);
       setsalesData(sales.data);
       // console.log(sales.data);
       // getSum(salesData.data, 'status');

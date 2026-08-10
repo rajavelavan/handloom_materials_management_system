@@ -4,8 +4,7 @@ import { Link } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import Axios from 'axios';
-import { BASE_URL } from '../../helper/config';
+import api from '../../helper/axiosInstance';
 
 
 export default function LoginPage() {
@@ -44,9 +43,10 @@ export default function LoginPage() {
 
     setLoading(true);
     try {
-      const res = await Axios.post(`${BASE_URL}/login`, user);
+      const res = await api.post(`/login`, user);
 
       if (res.data.success === true) {
+        sessionStorage.setItem("hmms_token", res.data.token);
         sessionStorage.setItem("hmms_user",JSON.stringify(res.data.user));
         sessionStorage.setItem("hmms_super_admin", res.data.user.role === "super_admin" ? true : false);
         if(res.data.user.isVerified === true){

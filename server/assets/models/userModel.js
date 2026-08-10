@@ -4,7 +4,7 @@ const authSchema = new Schema({
   role: {
     type: String,
     enum: ['admin', 'customer', 'super_admin'],
-    // required: true,
+    required: true,
   },
   userName: {
     type: String,
@@ -16,7 +16,7 @@ const authSchema = new Schema({
   },
   phone_no: {
     type: String,
-    requied: [true, 'please provide vaild mobile number.'],
+    required: [true, 'please provide vaild mobile number.'],
   },
   mail_id: {
     type: String,
@@ -26,12 +26,26 @@ const authSchema = new Schema({
   password: {
     type: String,
     required: [true, 'please provide password.'],
+    select: false,
   },
   isVerified: {
     type: Boolean,
     default: false,
   },
-  verifyOtp: String,
+  verifyOtp: {
+    type: String,
+    select: false,
+  },
+});
+
+// Defense in depth: even if a route forgets to exclude these fields from a query,
+// they're stripped here whenever a user document is serialized to JSON (res.send).
+authSchema.set('toJSON', {
+  transform: (_doc, ret) => {
+    delete ret.password;
+    delete ret.verifyOtp;
+    return ret;
+  },
 });
 
 const UserModel = model('user', authSchema);

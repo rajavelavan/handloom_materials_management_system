@@ -22,7 +22,7 @@ const productSchema = new Schema({
     required: [true, 'Type the Mail Address of the company.'],
   },
   date: {
-    requied: true,
+    required: true,
     type: String,
   },
   productName: {
@@ -31,9 +31,9 @@ const productSchema = new Schema({
   },
   weight: {
     type: String,
-    requied: [true, 'Provide product quantity'],
+    required: [true, 'Provide product quantity'],
   },
-  status: { type: String, requied: true },
+  status: { type: String, required: true },
   price: {
     type: String,
     // required: [true, 'Single procuct Rate'],

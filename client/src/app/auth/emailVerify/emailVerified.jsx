@@ -1,8 +1,7 @@
 // import { CircleCheckBigIcon } from 'lucide-react';
-import Axios from 'axios';
 import React, { useState, } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../../helper/config';
+import api from '../../helper/axiosInstance';
 import toast from 'react-hot-toast';
 
 export default function EmailVerified() {
@@ -28,7 +27,7 @@ export default function EmailVerified() {
     console.log(requestPayload)
     setLoading(true);
     try {
-      const apiRes = await Axios.post(`${BASE_URL}/verifyemail`, requestPayload);
+      const apiRes = await api.post(`/verifyemail`, requestPayload);
       console.log(apiRes)
       if(apiRes.data.success) {
         switch (userData.role) {

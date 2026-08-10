@@ -7,10 +7,9 @@ import { useForm } from 'react-hook-form';
 import TextInput from '../components/formInputs/textInput.jsx';
 import TextareaInput from '../components/formInputs/textareaInput.jsx';
 import SubmitButton from '../components/formInputs/submitButton.jsx';
-import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { BASE_URL } from '../helper/config.js';
+import api from '../helper/axiosInstance';
 
 export default function NewOrder() {
   
@@ -32,7 +31,7 @@ export default function NewOrder() {
     try {
       data.createdBy = userDetails.mail_id;
       data.invoiceNumber = "";
-      await Axios.post(`${BASE_URL}/order`, data);
+      await api.post(`/order`, data);
       //   console.log(res);
       setLoading(false);
       toast.success('New Product Added.');

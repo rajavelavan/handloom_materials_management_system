@@ -2,8 +2,7 @@
 import React, {useState, useEffect} from 'react';
 import UserDetails from '../components/customer/userDetails';
 import RecentPurchases from '../components/customer/recentPurchases';
-import Axios from 'axios';
-import { BASE_URL } from '../helper/config';
+import api from '../helper/axiosInstance';
 
 export default function CustomerPage() {
 
@@ -19,7 +18,7 @@ export default function CustomerPage() {
       try {
         let user = JSON.parse(sessionStorage.getItem("hmms_user"));
         console.log(user);
-        const res = await Axios.get(`${BASE_URL}/order/${user.mail_id}`);   
+        const res = await api.get(`/order/${user.mail_id}`);   
         console.log(res.data);  
         
         setSalesData(res.data);   

@@ -8,10 +8,9 @@ import TextInput from '../components/formInputs/textInput.jsx';
 import TextareaInput from '../components/formInputs/textareaInput.jsx';
 import SelectInput from '../components/formInputs/selectInput.jsx';
 import SubmitButton from '../components/formInputs/submitButton.jsx';
-import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { BASE_URL } from '../helper/config.js';
+import api from '../helper/axiosInstance';
 
 export default function NewUser() {
   const status = [
@@ -35,7 +34,7 @@ export default function NewUser() {
     setLoading(true);
     try {
       data.mail_id = data.mail_id.toLowerCase();
-      await Axios.post(`${BASE_URL}/user`, data);
+      await api.post(`/user`, data);
       //   console.log(res);
       setLoading(false);
       navigate('/manageuser');

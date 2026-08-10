@@ -7,8 +7,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { getData } from '../redux/features/userSlice';
 import { setSelectedData } from '../redux/features/userSlice';
 import toast from 'react-hot-toast';
-import Axios from 'axios';
-import { BASE_URL } from '../helper/config';
+import api from '../helper/axiosInstance';
 
 export default function ManageUser() {
   
@@ -26,7 +25,7 @@ export default function ManageUser() {
 
   async function handleDeleteConfirmation(confirmed) {
     if (confirmed) {
-      const res = await Axios.delete(`${BASE_URL}/user/${itemId}`);
+      const res = await api.delete(`/user/${itemId}`);
       toast.success('data deleted Success.');
       console.log("Removed Data:", res.data);
     }
@@ -36,7 +35,7 @@ export default function ManageUser() {
   React.useEffect(() => {
     const fetchdata = async () => {
       try {
-        const res = await Axios.get(`${BASE_URL}/user`) ;
+        const res = await api.get(`/user`) ;
         // console.log(res.data);    
         dispatch(getData(res.data));  
       } catch (error) {

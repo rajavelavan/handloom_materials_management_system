@@ -8,11 +8,10 @@ import TextInput from '../components/formInputs/textInput.jsx';
 import TextareaInput from '../components/formInputs/textareaInput.jsx';
 import SelectInput from '../components/formInputs/selectInput.jsx';
 import UpdateButton from '../components/formInputs/updateButton.jsx';
-import Axios from 'axios';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { BASE_URL } from '../helper/config.js';
+import api from '../helper/axiosInstance';
 
 export default function UpdateUser({ selectedData }) {
   const item = useSelector((state) => state.user.selectedData); // data get from slice success
@@ -50,8 +49,8 @@ export default function UpdateUser({ selectedData }) {
     console.log(updatedData);
     setLoading(true);
     try {
-      const res = await Axios.put(
-        `${BASE_URL}/user/${updatedData?._id}`,
+      const res = await api.put(
+        `/user/${updatedData?._id}`,
         updatedData
       );
       toast.success('User data updated.');

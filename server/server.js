@@ -11,6 +11,7 @@ import LogoutRouter from './routes/logoutRoute.js';
 import VerifyEmailRouter from './routes/verifyEmail.js'
 import OrderRouter from './routes/orderRoute.js';
 import ForgotPasswordRouter from './routes/forgotPassword.js'
+import { authenticate } from './middleware/auth.js';
 
 const corsOptions = {
     origin: process.env.FRONTEND_URL || 'https://hmms-client.vercel.app',
@@ -29,15 +30,20 @@ app.get('/', (req, res) => {
     console.log('world')
 });
 
-app.use('/purchases', PurchaseRouter);
-app.use('/sales', SalesRouter);
-app.use('/user', UserRouter);
+// Public routes — no auth required
 app.use('/signup', SignupRouter);
 app.use('/login', LoginRouter);
 app.use('/logout', LogoutRouter);
 app.use('/verifyemail', VerifyEmailRouter);
-app.use('/order', OrderRouter);
 app.use('/forgotpassword', ForgotPasswordRouter);
+
+// Protected routes — require a valid Bearer token (server/middleware/auth.js).
+// Note: this only checks "is logged in", not role-based permissions (e.g. a
+// customer can currently still hit /user) — fine-grained RBAC is Phase 3 scope.
+app.use('/purchases', authenticate, PurchaseRouter);
+app.use('/sales', authenticate, SalesRouter);
+app.use('/user', authenticate, UserRouter);
+app.use('/order', authenticate, OrderRouter);
 
 // This condition redering is because of the deployment of the server directory in vercel. Vercel is having a builtIn server to deploy the projects. 
 

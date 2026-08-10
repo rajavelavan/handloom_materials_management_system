@@ -1,6 +1,7 @@
 import express from 'express';
 import UserModel from '../assets/models/userModel.js';
 import bcryptjs from 'bcryptjs';
+import jwt from 'jsonwebtoken';
 import { verifyEmail } from '../helper/sendMail.js';
 
 const router = express.Router();
@@ -61,9 +62,18 @@ router.post('/', async (req, res) => {
      
      console.log('verify email sented to mailtrap.');
 
+    // Issue a token now so the post-verification redirect can go straight to the
+    // dashboard, same as a normal login, without asking the user to sign in twice.
+    const token = jwt.sign(
+      { id: savedUser._id, mail_id: savedUser.mail_id, role: savedUser.role },
+      process.env.TOKEN_SECRECT,
+      { expiresIn: '1d' }
+    );
+
     return res.status(200).send({
       success: true,
       message: 'User created successfully',
+      token,
       user: savedUser
     });
   } catch (error) {

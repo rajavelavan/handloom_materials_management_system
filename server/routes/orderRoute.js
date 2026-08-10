@@ -1,6 +1,9 @@
 import express from 'express';
-import OrderModel from '../assets/models/orderModel.js';
 import SalesModel from '../assets/models/salesModel.js';
+
+// Customer-placed orders are stored as Sales records (status "Packed", price/totalAmount
+// filled in later by an admin) rather than a separate Order collection — this matches how
+// the customer dashboard (recentPurchases.jsx) actually reads/displays this data.
 
 const router = express.Router();
 

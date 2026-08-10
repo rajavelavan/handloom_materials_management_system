@@ -1,7 +1,7 @@
 import express from 'express';
 import UserModel from '../assets/models/userModel.js';
 import bcryptjs from 'bcryptjs';
-// import jwt from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 
 const router = express.Router();
 
@@ -20,7 +20,7 @@ router.post('/', async (req, res) => {
     }
 
     //check if user don't exist
-    const user = await UserModel.findOne({ mail_id });
+    const user = await UserModel.findOne({ mail_id }).select('+password');
 
     if (!user) {
       console.log('Login Failed.');
@@ -40,25 +40,15 @@ router.post('/', async (req, res) => {
       });
     }
 
-    // //create token data
-    // const tokenData = {
-    //   id: user._id,
-    //   mail_id: user.mail_id,
-    //   password: user.password,
-    // };
-
-    // //create token
-    // const token = jwt.sign(tokenData, process.env.TOKEN_SECRECT, {
-    //   expiresIn: '1d',
-    // });
-
-    // console.log(token);
-
-    // //set the token into user's cookie
-    // res.cookie('token', token, { httpOnly: true });
+    //create token
+    const tokenData = { id: user._id, mail_id: user.mail_id, role: user.role };
+    const token = jwt.sign(tokenData, process.env.TOKEN_SECRECT, {
+      expiresIn: '1d',
+    });
 
     console.log('User Found.');
-    return res.status(200).send({ success: true, message: ' Login Success', user });
+    // toJSON transform on the model strips password/verifyOtp before this is serialized
+    return res.status(200).send({ success: true, message: ' Login Success', token, user });
 
   } catch (error) {
     return res.status(500).send({ success: false, error: error.message });

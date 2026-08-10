@@ -6,16 +6,16 @@ export const verifyEmail = async ({userName, mail_id, otp }) => {
 
   try {
     var transport = nodemailer.createTransport({
-      host: 'sandbox.smtp.mailtrap.io',
-      port: 2525,
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
       auth: {
-        user: 'd6aedf26b14869',
-        pass: '39f9b82a0b9191',
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
 
     const mailOptions = {
-      from: 'velavanappaiyan@gmail.com',
+      from: process.env.EMAIL_FROM,
       to: mail_id,
       subject: 'Greetings From HMMS!',
       html: emailTemplate

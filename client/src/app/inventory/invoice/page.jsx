@@ -6,9 +6,8 @@ import { FileDownIcon, FilePenLineIcon, Trash2Icon } from 'lucide-react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getData } from '../../redux/features/salesSlice';
 import toast from 'react-hot-toast';
-import Axios from 'axios';
 import { setSelectedData } from '../../redux/features/salesSlice';
-import { BASE_URL } from '../../helper/config';
+import api from '../../helper/axiosInstance';
 import { jsPDF } from "jspdf";
 
 export default function Invoice() {
@@ -59,7 +58,7 @@ export default function Invoice() {
 
   async function handleDeleteConfirmation(confirmed) {
     if (confirmed) {
-      const res = await Axios.delete(`${BASE_URL}/sales/${itemId}`);
+      const res = await api.delete(`/sales/${itemId}`);
       toast.success('data deleted Success.');
       console.log('Removed Data:', res.data);
     }
@@ -69,7 +68,7 @@ export default function Invoice() {
   React.useEffect(() => {
     const fetchdata = async () => {
       try {
-        const res = await Axios.get(`${BASE_URL}/sales`);
+        const res = await api.get(`/sales`);
         // console.log(res);
         dispatch(getData(res.data));
       } catch (error) {

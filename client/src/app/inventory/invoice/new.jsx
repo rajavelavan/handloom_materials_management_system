@@ -7,10 +7,9 @@ import { useForm } from 'react-hook-form';
 import TextInput from '../../components/formInputs/textInput.jsx';
 import TextareaInput from '../../components/formInputs/textareaInput.jsx';
 import SubmitButton from '../../components/formInputs/submitButton.jsx';
-import Axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import { BASE_URL } from '../../helper/config.js';
+import api from '../../helper/axiosInstance';
 
 export default function NewInvoice() {
   
@@ -29,7 +28,7 @@ export default function NewInvoice() {
     console.log('User submitted data:', data);
     setLoading(true);
     try {
-      await Axios.post(`${BASE_URL}/sales`, data);
+      await api.post(`/sales`, data);
       //   console.log(res);
       setLoading(false);
       navigate('/invoice');
